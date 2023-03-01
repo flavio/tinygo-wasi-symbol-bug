@@ -1,4 +1,4 @@
-This repository contains a small reproducer for a tinygo issue.
+This repository contains a small reproducer for a [this tinygo issue](https://github.com/tinygo-org/tinygo/issues/3501).
 
 ## Requirements
 

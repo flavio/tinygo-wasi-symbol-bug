@@ -1,5 +1,17 @@
-build:
-	docker run --rm -v ${PWD}:/src -w /src tinygo:patched tinygo build -x \
+build_0_29:
+	docker run --rm \
+		-e GOPROXY=https://proxy.golang.org \
+		-e GOSUMDB=sum.golang.org \
+		-v ${PWD}:/src -w /src \
+		tinygo/tinygo:0.29.0 tinygo build -x \
+		-o policy.wasm \
+		-target=wasi \
+		-no-debug .
+
+build_0_30:
+	docker run --rm \
+		-v ${PWD}:/src -w /src \
+		tinygo/tinygo:0.30.0 tinygo build -x \
 		-o policy.wasm \
 		-target=wasi \
 		-no-debug .
@@ -7,11 +19,8 @@ build:
 build-container:
 	DOCKER_BUILDKIT=1 docker build . -t tinygo:patched
 
-bug:
-	docker run --rm -v ${PWD}:/src -w /src tinygo/tinygo:0.27.0 tinygo build -x \
+build_patched:
+	docker run --rm -v ${PWD}:/src -w /src tinygo:patched tinygo build -x \
 		-o policy.wasm \
 		-target=wasi \
 		-no-debug .
-
-run:
-	wasmtime run policy.wasm

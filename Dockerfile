@@ -1,9 +1,8 @@
 # syntax=docker/dockerfile:1-labs
 
 FROM alpine AS downloader
-ADD --checksum=sha256:86a88ed80ba42d581f2139bfdcf1a6debeec558e3379ef85e69297579c758241 https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-16/libclang_rt.builtins-wasm32-wasi-16.0.tar.gz /
-RUN tar xvf /libclang_rt.builtins-wasm32-wasi-16.0.tar.gz
+ADD --checksum=sha256:c55b74f3109cdae97490faf089b0286d3bba926bb6ea5ed00c8c784fc53718fd https://github.com/WebAssembly/binaryen/releases/download/version_116/binaryen-version_116-x86_64-linux.tar.gz /
+RUN tar xvf /binaryen-version_116-x86_64-linux.tar.gz
 
-FROM "tinygo/tinygo:0.28.1"
-COPY --from=downloader /lib/wasi/libclang_rt.builtins-wasm32.a /usr/local/tinygo/lib/wasi-libc/sysroot/lib/wasm32-wasi/
-COPY ./wasi.json /usr/local/tinygo/targets/wasi.json
+FROM "tinygo/tinygo:0.30.0"
+COPY --from=downloader binaryen-version_116/bin/wasm-opt /usr/local/tinygo/bin/wasm-opt

@@ -10,7 +10,7 @@ This repository contains a small reproducer for a [this tinygo issue](https://gi
 Run the following command to reproduce the issue:
 
 ```console
-make build_0_30
+make build_0_31
 ```
 
 The process will exit with an error similar to the following one:
@@ -21,30 +21,6 @@ The process will exit with an error similar to the following one:
 
 The error is raised by `wasm-opt`.
 
-The bug is currently happening with tinygo v0.30.0, which ships `wasm-opt` 114.
+The bug is currently happening with tinygo v0.31.0, which ships `wasm-opt` 116.
 
-I can reprodce the issue also with latest version of `wasm-opt` (v116):
-
-## Build with tinygo 0.29
-
-The same error can be found with tinygo 0.29:
-
-```console
-make build_0_29
-```
-
-## Use latest `wasm-opt`
-
-Build the container based on tinygo 0.30.0 that has `wasm-opt` 116:
-
-```console
-make build-container
-```
-
-Reproduce the issue:
-
-```console
-make build_patched
-```
-
-The process will error in the same way.
+The bug affects also older releases of TinyGo.
